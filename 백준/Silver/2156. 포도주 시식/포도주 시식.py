@@ -15,4 +15,4 @@ if n > 2:
 for i in range(4,n+1):
     dp[i] = max(dp[i-1], dp[i-2]+wine[i], dp[i-3]+wine[i-1]+wine[i])
 
-print(max(dp))
+print(dp[-1])
