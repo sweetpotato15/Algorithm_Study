@@ -3,6 +3,7 @@ input = sys.stdin.readline
 
 n,m = map(int, input().split()) # n개 점, m 선 - 홀수, 후 - 짝수
 parent = list(range(n))
+
 def find_parent(parent, x):
     if parent[x] != x:
         parent[x] = find_parent(parent, parent[x])
@@ -16,20 +17,14 @@ def union_parent(parent, a, b):
     else:
         parent[a] = b
 
-array = []
-for i in range(m):
-    array.append(list(map(int, input().split())))
-cylce = False
 answer = 0
 
-for i in range(m):
-    a = array[i][0]
-    b = array[i][1]
-    if find_parent(parent, a) != find_parent(parent, b):
+for i in range(1, m+1):
+    a,b = map(int, input().split())
+    if find_parent(parent, a) != find_parent(parent, b): # 사이클 발생 안함
         union_parent(parent, a, b)
-    else:
-        cycle = True
-        answer = i+1
+    else: # 사이클 발생
+        answer = i
         break
 
 print(answer)
