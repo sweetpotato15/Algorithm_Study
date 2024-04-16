@@ -6,10 +6,10 @@ medal = [ list(map(int, input().split())) for _ in range(n) ]
 
 medal = sorted(medal, key = lambda x : (x[1],x[2],x[3]) , reverse = True)
 
-for i in range(n-1):
-    if medal[i][1:] == medal[i+1][1:]:
-        medal[i].append(i+1)
-        medal[i+1].append(medal[i][4])
+medal[0].append(1)
+for i in range(1,n):
+    if medal[i][1:4] == medal[i-1][1:4]:
+        medal[i].append(medal[i-1][4])
     else:
         medal[i].append(i+1)
 
