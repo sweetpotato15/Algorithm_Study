@@ -1,30 +1,23 @@
 import sys
-
 input = sys.stdin.readline
-n,m = map(int, input().split())
-A = list(map(int, input().split()))
+from itertools import combinations
+n,m = map(int, input().split()) # n 개수, m 나눌 숫자
+number = list(map(int, input().split()))
+number = [x % m for x in number] # 나머지 저장
 
-answer = 0 # 정답 count 수
-S = [0] *n # 구간합 초기화
-C = [0] * m # 나머지 같은 값 count 수
-remainder = [0] * n
-
-# 구간합 구하기
-S[0] = A[0]
-for i in range(1, n):
-    S[i] = S[i-1] + A[i]
-
-# 나머지 배열로 초기화
+s = [0] * n # 누적합
+s[0] = number[0]
+for i in range(1,n):
+    s[i] = s[i-1] + number[i]
+C = [0] * m
+answer =0 
 for i in range(n):
-    remainder = S[i] % m
+    remainder = s[i] % m
     if remainder == 0:
         answer += 1
     C[remainder] += 1
-    
-# 나머지 같은 값 (조합)
 
 for i in range(m):
-    if C[i] > 1:
-        answer += C[i] * (C[i] -1) //2
+    answer += C[i] * (C[i]-1) // 2
 
 print(answer)
