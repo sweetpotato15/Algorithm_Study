@@ -1,13 +1,10 @@
 import sys
 input = sys.stdin.readline
 from collections import deque
-
-n = int(input())
-q = deque(list(range(1,n+1)))
-while q :
-    if len(q) == 1:
-        print(*q)
-        break
-    q.popleft()
-    now = q.popleft()
-    q.append(now)
+card = deque(list(range(1,int(input())+1)))
+while card:
+    if len(card) == 1:
+        print(*card)
+        break 
+    card.popleft()
+    card.append(card.popleft())
