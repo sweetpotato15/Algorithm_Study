@@ -3,7 +3,7 @@ input = sys.stdin.readline
 
 n = int(input())
 water = list(map(int,input().split()))
-a = int(1e10)
+mini = int(1e10)
 answer = []
 
 start = 0
@@ -13,14 +13,16 @@ end = n-1
 
 # a를 기준으로 합한 결과 (value)와 비교해가면서
 while start < end:
-    value = abs(water[start]+water[end])
-    if value < a :
-        a = value
+    value = water[start]+water[end]
+    if abs(value) < mini :
+        mini = abs(value)
         answer = sorted([water[start],water[end]])
     
-    if water[start] + water[end] < a:
+    if value < 0 :
         start += 1
-    else:
+    elif value >0 :
         end -= 1
-    
+    else:
+        answer = sorted([water[start], water[end]])
+        break
 print(*answer)
