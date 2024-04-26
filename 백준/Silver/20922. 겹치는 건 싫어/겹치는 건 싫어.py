@@ -10,7 +10,6 @@ dp = [0] * (max(number) + 1)
 stack = deque()
 
 for i in range(n):
-    answer = max(answer, len(stack))
     stack.append(number[i])
     dp[number[i]] += 1
     if dp[number[i]] > k : 
