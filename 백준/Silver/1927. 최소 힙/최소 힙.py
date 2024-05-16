@@ -2,15 +2,14 @@ import sys
 input = sys.stdin.readline
 import heapq
 
-q = []
-
 n = int(input())
+numbers = []
 for _ in range(n):
     x = int(input())
     if x == 0:
-        if not q:
-            print(0)
+        if numbers:
+            print(heapq.heappop(numbers))
         else:
-            print(heapq.heappop(q))
+            print(0)
     else:
-        heapq.heappush(q,x)
+        heapq.heappush(numbers, x)
