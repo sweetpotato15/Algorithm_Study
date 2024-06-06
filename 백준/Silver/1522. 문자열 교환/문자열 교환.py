@@ -1,8 +1,10 @@
-s = input() # 문자열 입력
-a = s.count('a') # 입력된 str에서의 a의 개수
+string = input().strip()
 
-s += s[0:a-1] # 원형 문자열 처리
-min_val = float('inf') # 최솟값
-for i in range(len(s)-(a-1)):
-    min_val = min(min_val, s[i:i+a].count('b'))
-print(min_val)
+num_a = string.count('a')
+new_s = string[:] + string[:]
+# aaabba a가 4개 이므로 index 0 ~ 2 까지 반복
+maximum = 0
+for i in range(0,len(new_s)-num_a+1):
+    maximum = max(maximum, new_s[i:i+num_a].count('a'))
+
+print(num_a - maximum)
