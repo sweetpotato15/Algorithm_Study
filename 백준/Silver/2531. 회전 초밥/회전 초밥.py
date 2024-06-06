@@ -9,10 +9,8 @@ result = 0
 start, end = 0, k
 while end <= len(new_belt)+1:
     now = new_belt[start:end]
-    now_type = len(set(now)) # 초밥 종류 수
-    now_coupon = [0 if c in now else 1] # 쿠폰이 몇개 포함되는지
-    answer = now_type + now_coupon[0]
-
+    # 연속된 접시 중 초밥 종류 + 쿠폰이 포함되는지 여부 (있으면 0, 없으면 1)
+    answer = len(set(now)) + int(c not in now)
     result = max(result, answer)
     start += 1
     end += 1
