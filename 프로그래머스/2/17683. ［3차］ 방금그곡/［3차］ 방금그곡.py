@@ -1,6 +1,7 @@
 
 def solution(m, musicinfos):
     m = exit_star(m)
+    
     musicinfos = [x.split(',') for x in musicinfos]
     new_list = [] # 제목, 재생시간, 악보
     print(musicinfos)
@@ -8,17 +9,12 @@ def solution(m, musicinfos):
     for music in musicinfos:
         name = music[2] # 제목
         # 재생시간
-        length = int(music[1][:2])*60 + int(music[1][3:]) - (int(music[0][:2])*60 + int(music[0][3:]))
+        start = list(map(int, music[0].split(':')))
+        end = list(map(int, music[1].split(':')))
+        length = (end[0]-start[0])*60 + end[1]-start[1]
         # 악보
         music_3 = exit_star(music[3])
         paper = music_3 * (length // len(music_3)) + music_3[:length%len(music_3)+1]
-        # if length % len(music_3) == 0:
-        #     if length == len(music_3):
-        #         paper = music_3
-        #     else:
-        #         paper = music_3*(length // len(music_3))
-        # else:
-        #     paper = music_3 + music_3[:length%len(music_3)+1]
         new_list.append([name, length,paper])
     
     answer = []
