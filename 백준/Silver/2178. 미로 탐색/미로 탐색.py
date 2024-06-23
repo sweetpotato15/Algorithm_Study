@@ -1,29 +1,29 @@
 import sys
 input = sys.stdin.readline
 
-# graph, visited, q
-n, m = map(int, input().split())
-graph = [[] for _ in range(n)]
-for i in range(n):
-    graph[i] = list(map(int, input().strip()))
-visited = [[False] * m for _ in range(n)]
+N,M = map(int, input().split())
+miro = [list(map(int,input().strip())) for _ in range(N)]
+visited = [[False]*M for _ in range(N)]
 
 from collections import deque
-def bfs(a,b):
-    q = deque()
-    q.append((a,b))
-    visited[a][b] = True
-    while q:
-        x,y = q.popleft()
 
-        dx = [-1,1,0,0]
-        dy = [0,0,-1,1]
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            if 0 <= nx < n and 0 <= ny < m and not visited[nx][ny] and graph[nx][ny] != 0:
+def bfs(x,y):
+    q = deque()
+    q.append([x,y])
+    visited[x][y] = True
+    
+    while q:
+        now = q.popleft()
+        cx = now[0]
+        cy = now[1]
+        
+        for dx, dy in [(-1,0),(1,0),(0,1),(0,-1)]:
+            nx=cx+dx
+            ny=cy+dy
+            if 0<=nx<N and 0<=ny<M and not visited[nx][ny] and miro[nx][ny] != 0:
                 q.append((nx,ny))
                 visited[nx][ny] = True
-                graph[nx][ny] += graph[x][y]
+                miro[nx][ny] += miro[cx][cy]
+
 bfs(0,0)
-print(graph[-1][-1])
+print(miro[-1][-1])
