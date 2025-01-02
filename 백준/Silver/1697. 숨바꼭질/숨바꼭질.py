@@ -13,5 +13,5 @@ while q:
         break
     for x in [pos-1, pos+1, pos*2]:
         if 0<=x<=100000 and not visited[x]:
-            q.append([sec+1, x])
+            q.append((sec+1, x))
             visited[x] = True
