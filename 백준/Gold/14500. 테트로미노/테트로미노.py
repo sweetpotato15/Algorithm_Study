@@ -2,47 +2,35 @@ import sys
 input = sys.stdin.readline
 
 def dfs(x, y, count, total):
-    global max_value
-    if count == 4:
-        max_value = max(max_value, total)
+    global sum_value
+    if sum_value >= total + (3-count)*max_value: # 나머지가 다 최대라도 이미 최댓값보다 작은경우 
         return 
+    if count == 3:
+        sum_value = max(sum_value, total)
+        return 
+    
     for (i, j) in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
         nx, ny = x+i, y+j
         if 0<=nx<N and 0<=ny<M and not visited[nx][ny]:
+            if count == 1: # 2개 연결됐을 때
+                visited[nx][ny] = True
+                dfs(x, y, count+1, total+graph[nx][ny])
+                visited[nx][ny] = False
+
             visited[nx][ny] = True
             dfs(nx, ny, count+1, total+graph[nx][ny])
             visited[nx][ny] = False
 
-def block(x, y):
-    global max_value
-    value = graph[x][y]
-    block = 0
-    for (i, j) in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-        nx, ny = x+i, y+j
-        if 0<=nx<N and 0<=ny<M:
-            block += 1
-            value += graph[nx][ny]
-    
-    if block == 3:
-        max_value = max(max_value, value)
-    
-    if block == 4:
-        for (i, j) in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
-            nx, ny = x+i, y+j
-            value -= graph[nx][ny]
-            max_value = max(max_value, value)
-            value += graph[nx][ny]
-
 N, M = map(int, input().split())
 graph = [list(map(int, input().split())) for _ in range(N)]
 visited = [[0]*M for _ in range(N)]
-max_value = 0
+sum_value = 0
+max_value = max(map(max, graph))
 
 for i in range(N):
     for j in range(M):
         visited[i][j] = True
-        dfs(i, j, 0, 0)
-        block(i, j)
+        dfs(i, j, 0, graph[i][j])
         visited[i][j] = False
 
-print(max_value)
+print(sum_value)
