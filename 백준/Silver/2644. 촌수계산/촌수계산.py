@@ -1,21 +1,20 @@
 import sys
 input = sys.stdin.readline
-from collections import deque
 
 '''
 dfs 방법으로 t1에서 시작해서 t2 까지 도달하는 방법
 '''
-def dfs(start, end, count):
-    global flag, answer
-    if start == end:
-        flag = True
-        answer = count
-        return 
+def dfs(start, count):
+    global flag
     visited[start] = True
+    if start == t2:
+        flag = True
+        print(count)
+        return 
 
     for x in graph[start]:
         if not visited[x]:
-            dfs(x, end, count+1)
+            dfs(x, count+1)
 
 N = int(input())
 t1, t2 = map(int, input().split())
@@ -29,9 +28,6 @@ for _ in range(M):
     graph[child].append(parent)
 
 flag = False
-answer = 0
-dfs(t1, t2, 0)
-if flag:
-    print(answer)
-else:
+dfs(t1, 0)
+if not flag:
     print(-1)
