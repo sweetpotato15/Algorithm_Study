@@ -15,11 +15,11 @@ dir_dic = {'U' : (-1, 0), # 위
             'L' : (0, -1)}  # 왼
 dir_lst = ['U', 'D', 'S', 'L', 'U', 'D', 'S', 'L']
 
-direction = [] # D:오른쪽, L:왼쪽
+direction = {} # D:오른쪽, L:왼쪽
 L = int(input())
 for _ in range(L):
     a, b = input().split()
-    direction.append((int(a), b))
+    direction[int(a)] = b
 
 snake = deque([(0, 0, 'D')]) # (x, y, 방향) / 꼬리 ~ 머리 순
 now_time = 0
@@ -46,9 +46,9 @@ while True:
         graph[nx][ny] = 0
 
     # 5) n초 후, 방향 전환
-    if now_time in [x[0] for x in direction]:
+    if now_time in direction.keys():
         x, y, d = snake.pop()
-        t, nd = direction.pop(0)
+        nd = direction[now_time]
 
         d_index = dir_lst.index(d)
         if nd == 'D': # 시계 방향으로 90도 (머리만)
