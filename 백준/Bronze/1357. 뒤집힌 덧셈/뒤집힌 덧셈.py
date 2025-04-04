@@ -1,0 +1,5 @@
+x, y = map(str, input().split())
+rx = str(int(x[::-1]))
+ry = str(int(y[::-1]))
+rx_ry = str(eval(rx + ' + ' + ry))
+print(int(rx_ry[::-1]))
