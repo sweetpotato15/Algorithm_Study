@@ -3,22 +3,24 @@ input = sys.stdin.readline
 from collections import deque
 
 N, W, L = map(int, input().split()) # 트럭수, 다리 길이, 다리 최대하중
-array = deque(list(map(int, input().split())))
+trucks = deque(list(map(int, input().split())))
 
-ans = 0
-q = deque([0]*W, maxlen=W)
-while array or q:
-    if q[0]: 
-        q.popleft()
+bridge = deque([0]*W)
+weight = 0
+time = 0
 
-    if array and sum(q) + array[0] <= L:
-        q.append(array.popleft())
+for truck in trucks:
+    while True:
+        ltruck = bridge.popleft()
+        weight -= ltruck
 
-    else:
-        q.append(0)
+        time += 1
 
-    ans += 1
+        if weight + truck <= L:
+            bridge.append(truck)
+            weight += truck
+            break
+        else:
+            bridge.append(0)
 
-    if sum(q) == 0:
-        break
-print(ans)
+print(time+W)
